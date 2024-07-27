@@ -26,15 +26,15 @@
     }
     
     async function saveWorkoutSession() {
-  if ($currentUser && exercises.length > 0) {
-    try {
-      const session = await pb.collection('workouts').create({
-        field: $currentUser.id,
-        sessionName: 'My Workout',
-        notes: 'Notes about the workout',
-      });
+    if ($currentUser && exercises.length > 0) {
+      try {
+        const session = await pb.collection('workouts').create({
+          field: $currentUser.id,
+          sessionName: 'My Workout',
+          notes: 'Notes about the workout',
+        });
       console.log('Session ID:', session.id);
-console.log('Exercises:', exercises);
+      console.log('Exercises:', exercises);
 
 
       const exerciseIds = [];
@@ -45,7 +45,7 @@ console.log('Exercises:', exercises);
           sets: exercise.sets,
           reps: exercise.reps,
           weight: exercise.weight,
-          field: session.id
+          field: $currentUser.id
         });
 
         exerciseIds.push(createdExercise.id);
