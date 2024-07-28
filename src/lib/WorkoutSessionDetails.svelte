@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { pb } from './pocketbase';
-  import { onMount } from 'svelte';
+  import { pb } from "./pocketbase";
+  import { onMount } from "svelte";
 
   export let sessionId: string;
 
@@ -15,21 +15,21 @@
   }
 
   let exercises: Exercise[] = [];
-  let error = '';
+  let error = "";
 
   async function loadWorkoutSession() {
-    console.log('Loading workout session for ID:', sessionId);
+    console.log("Loading workout session for ID:", sessionId);
     try {
-      const session = await pb.collection('workouts').getOne(sessionId);
-      console.log('Fetched session:', session);
+      const session = await pb.collection("workouts").getOne(sessionId);
+      console.log("Fetched session:", session);
 
       const exerciseIds: string[] = session.exercises || [];
-      console.log('Exercise IDs:', exerciseIds);
+      console.log("Exercise IDs:", exerciseIds);
 
       const fetchedExercises = await Promise.all(
         exerciseIds.map(async (id) => {
           try {
-            const exercise = await pb.collection('workout').getOne(id);
+            const exercise = await pb.collection("workout").getOne(id);
             return {
               id: exercise.id,
               workout: exercise.workout,
@@ -37,20 +37,22 @@
               reps: exercise.reps,
               weight: exercise.weight,
               created: exercise.created,
-              updated: exercise.updated
+              updated: exercise.updated,
             };
           } catch (fetchError) {
             console.error(`Error fetching exercise with ID ${id}:`, fetchError);
             return null;
           }
-        })
+        }),
       );
 
-      exercises = fetchedExercises.filter(exercise => exercise !== null) as Exercise[];
-      console.log('Fetched exercises:', exercises);
+      exercises = fetchedExercises.filter(
+        (exercise) => exercise !== null,
+      ) as Exercise[];
+      console.log("Fetched exercises:", exercises);
     } catch (e) {
-      console.error('Error loading workout session:', e);
-      error = 'Failed to load workout session. Please try again.';
+      console.error("Error loading workout session:", e);
+      error = "Failed to load workout session. Please try again.";
     }
   }
 
@@ -65,7 +67,9 @@
     {#each exercises as exercise (exercise.id)}
       <div>
         <h4>{exercise.workout}</h4>
-        <p>Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}</p>
+        <p>
+          Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}
+        </p>
       </div>
     {/each}
   {:else}
