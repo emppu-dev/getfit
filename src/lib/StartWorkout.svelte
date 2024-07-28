@@ -24,18 +24,26 @@
       exercises = [...exercises, { ...newExercise }];
       newExercise = { workout: '', sets: 0, reps: 0, weight: 0 };
     }
+
+    function calculateXP(exerciseCount: number): number {
+  let xp = exerciseCount * 100;
+  if (exerciseCount >= 5) {
+    xp += 500;
+  }
+  return xp;
+}
+
     
     async function saveWorkoutSession() {
-    if ($currentUser && exercises.length > 0) {
-      try {
-        const session = await pb.collection('workouts').create({
-          field: $currentUser.id,
-          sessionName: 'My Workout',
-          notes: 'Notes about the workout',
-        });
+  if ($currentUser && exercises.length > 0) {
+    try {
+      const session = await pb.collection('workouts').create({
+        field: $currentUser.id,
+        sessionName: 'My Workout',
+        notes: 'Notes about the workout',
+      });
       console.log('Session ID:', session.id);
       console.log('Exercises:', exercises);
-
 
       const exerciseIds = [];
 
@@ -55,9 +63,17 @@
         exercises: exerciseIds
       });
 
+      const xpGained = calculateXP(exercises.length);
+
+      const updatedUser = await pb.collection('users').update($currentUser.id, {
+        xp: ($currentUser.xp || 0) + xpGained
+      });
+
+      $currentUser = updatedUser;
+
       exercises = [];
       error = '';
-      dispatch('workoutAdded');
+      dispatch('workoutAdded', { xpGained });
     } catch (e) {
       console.error('Error saving workout session:', e);
       error = 'Failed to save workout session. Please try again.';
@@ -66,6 +82,7 @@
     error = 'Please add at least one exercise before saving.';
   }
 }
+
 
     </script>
     
