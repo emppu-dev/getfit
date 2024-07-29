@@ -1,0 +1,239 @@
+[
+    {
+        "id": "ztndhckwkrcmyu9",
+        "name": "users",
+        "type": "auth",
+        "system": false,
+        "schema": [
+            {
+                "system": false,
+                "id": "duntruzv",
+                "name": "name",
+                "type": "text",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "fsl2efyn",
+                "name": "avatar",
+                "type": "file",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "mimeTypes": [
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif",
+                        "image/webp"
+                    ],
+                    "thumbs": null,
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "protected": false
+                }
+            },
+            {
+                "system": false,
+                "id": "7rakcyyb",
+                "name": "xp",
+                "type": "number",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": 0,
+                    "max": 47478300,
+                    "noDecimal": true
+                }
+            }
+        ],
+        "indexes": [],
+        "listRule": "id = @request.auth.id",
+        "viewRule": "id = @request.auth.id",
+        "createRule": "",
+        "updateRule": "id = @request.auth.id",
+        "deleteRule": "id = @request.auth.id",
+        "options": {
+            "allowEmailAuth": true,
+            "allowOAuth2Auth": true,
+            "allowUsernameAuth": true,
+            "exceptEmailDomains": null,
+            "manageRule": null,
+            "minPasswordLength": 8,
+            "onlyEmailDomains": null,
+            "onlyVerified": true,
+            "requireEmail": true
+        }
+    },
+    {
+        "id": "kffw2l2pzpnw0we",
+        "name": "workout",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "system": false,
+                "id": "i2xfjaaa",
+                "name": "workout",
+                "type": "text",
+                "required": true,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 128,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "gll21fma",
+                "name": "sets",
+                "type": "number",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": 0,
+                    "max": 128,
+                    "noDecimal": true
+                }
+            },
+            {
+                "system": false,
+                "id": "unk6bko3",
+                "name": "reps",
+                "type": "number",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": 0,
+                    "max": 128,
+                    "noDecimal": true
+                }
+            },
+            {
+                "system": false,
+                "id": "0u7isdk8",
+                "name": "weight",
+                "type": "number",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": 0,
+                    "max": 2048,
+                    "noDecimal": false
+                }
+            },
+            {
+                "system": false,
+                "id": "ybb94gwg",
+                "name": "field",
+                "type": "relation",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ztndhckwkrcmyu9",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            }
+        ],
+        "indexes": [],
+        "listRule": "field = @request.auth.id",
+        "viewRule": "field = @request.auth.id",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "field = @request.auth.id",
+        "deleteRule": "field = @request.auth.id",
+        "options": {}
+    },
+    {
+        "id": "ri94go0jm55jv4s",
+        "name": "workouts",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "system": false,
+                "id": "bdq1noyn",
+                "name": "field",
+                "type": "relation",
+                "required": true,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "ztndhckwkrcmyu9",
+                    "cascadeDelete": false,
+                    "minSelect": null,
+                    "maxSelect": 1,
+                    "displayFields": null
+                }
+            },
+            {
+                "system": false,
+                "id": "wptrkp8i",
+                "name": "exercises",
+                "type": "relation",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "collectionId": "kffw2l2pzpnw0we",
+                    "cascadeDelete": false,
+                    "minSelect": 1,
+                    "maxSelect": null,
+                    "displayFields": null
+                }
+            },
+            {
+                "system": false,
+                "id": "79pf7kcc",
+                "name": "sessionName",
+                "type": "text",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 128,
+                    "pattern": ""
+                }
+            },
+            {
+                "system": false,
+                "id": "3v93qtmy",
+                "name": "notes",
+                "type": "text",
+                "required": false,
+                "presentable": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 1024,
+                    "pattern": ""
+                }
+            }
+        ],
+        "indexes": [],
+        "listRule": "field = @request.auth.id",
+        "viewRule": "field = @request.auth.id",
+        "createRule": "@request.auth.id != \"\"",
+        "updateRule": "field = @request.auth.id",
+        "deleteRule": "field = @request.auth.id",
+        "options": {}
+    }
+]
