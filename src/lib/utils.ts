@@ -1,3 +1,9 @@
+/* 
+GetFit: A gamefied exercise tracker
+Copyright (C) 2024 emppu-dev
+Licensed under the GNU AGPLv3
+https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
+*/
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';

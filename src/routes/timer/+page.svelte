@@ -1,3 +1,9 @@
+<!--
+GetFit: A gamefied exercise tracker
+Copyright (C) 2024 emppu-dev
+Licensed under the GNU AGPLv3
+https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
+-->
 <script lang="ts">
     import { currentUser } from '../../lib/pocketbase';
     import { goto } from '$app/navigation';
