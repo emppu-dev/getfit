@@ -212,17 +212,17 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
             </CardHeader>
             <CardContent>
                 <div class="space-y-4">
-                    <div>
-                        <p class="text-sm text-muted-foreground mb-2">Level: {userLevel}</p>
-                        <Progress value={xpProgress} />
-                        <p class="text-sm text-muted-foreground mt-1">XP: {$currentUser.xp} / {levels[userLevel]}</p>
-                    </div>
-					<div class="flex justify-end space-x-2">
-						<Button variant="default" href="/workout">Start New Workout</Button>
-						<Button variant="secondary" href="/timer">Workout Timer</Button>
-						<Button variant="outline" on:click={signOut}>Sign Out</Button>
+					<div>
+						<p class="text-sm text-muted-foreground mb-2">Level: {userLevel}</p>
+						<Progress value={xpProgress} />
+						<p class="text-sm text-muted-foreground mt-1">XP: {$currentUser.xp} / {levels[userLevel]}</p>
+					</div>
+					<div class="flex flex-col sm:flex-row sm:justify-end space-y-2 sm:space-y-0 sm:space-x-2">
+						<Button variant="default" href="/workout" class="w-full sm:w-auto">Start New Workout</Button>
+						<Button variant="secondary" href="/timer" class="w-full sm:w-auto">Workout Timer</Button>
+						<Button variant="outline" on:click={signOut} class="w-full sm:w-auto">Sign Out</Button>
 					</div>					
-                </div>
+				</div>				
             </CardContent>
         </Card>
 
