@@ -41,6 +41,8 @@
 	"dependencies": {
 		"bits-ui": "^0.21.13",
 		"clsx": "^2.1.1",
+		"cmdk-sv": "^0.0.18",
+		"dotenv": "^16.4.5",
 		"lucide-svelte": "^0.417.0",
 		"mode-watcher": "^0.4.1",
 		"pocketbase": "^0.21.4",
