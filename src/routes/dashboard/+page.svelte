@@ -7,7 +7,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 <script lang="ts">
     import { currentUser, pb } from '../../lib/pocketbase';
     import { calculateLevel } from '../../lib/utils';
-    import { onMount } from 'svelte';
+    import { onMount, tick } from 'svelte';
     import { goto } from '$app/navigation';
     import * as WorkoutTracker from '../../lib/WorkoutTracker';
     import * as WorkoutSessionDetails from '../../lib/WorkoutSessionDetails';
@@ -167,14 +167,18 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	}
 
 	async function selectSession(session: WorkoutTracker.WorkoutSession) {
-		selectedSession = session;
-		try {
-			sessionExercises = await WorkoutSessionDetails.loadWorkoutSession(session.id);
-			error = '';
-		} catch (e) {
-			error = e instanceof Error ? e.message : 'An unknown error occurred';
-		}
-	}
+    selectedSession = session;
+    try {
+        sessionExercises = await WorkoutSessionDetails.loadWorkoutSession(session.id);
+        error = '';
+
+        await tick();
+        document.getElementById('workoutDetails')?.scrollIntoView({ behavior: 'smooth' });
+    } catch (e) {
+        error = e instanceof Error ? e.message : 'An unknown error occurred';
+    }
+}
+
 
 	async function deleteWorkoutSession(id: string) {
 		try {
@@ -244,7 +248,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 
                 {#if selectedSession}
                     <div class="mt-6">
-                        <h3 class="text-xl font-semibold mb-4">Workout Details</h3>
+                        <h3 id="workoutDetails" class="text-xl font-semibold mb-4">Workout Details</h3>
                         {#if sessionExercises.length > 0}
                             {#each sessionExercises as exercise (exercise.id)}
                                 <Card class="mb-4">
