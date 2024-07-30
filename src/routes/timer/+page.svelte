@@ -11,7 +11,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	import { Button } from '$lib/components/ui/button/index';
 	import { Input } from '$lib/components/ui/input/index';
 	import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '$lib/components/ui/card';
-    import { Label } from '$lib/components/ui/label';
+	import { Label } from '$lib/components/ui/label';
 
 	onMount(async () => {
 		if (!currentUser) {
@@ -102,43 +102,42 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 		</CardHeader>
 		<CardContent>
 			<div class="space-y-4">
-                <div class="flex justify-between">
-                    <span class="text-lg font-semibold">Time left:</span>
-                    <span class="text-lg font-bold">{totalTime - time}</span>
-                </div>
-                <div class="flex justify-between">
-                    <span class="text-lg font-semibold">Completed sets:</span>
-                    <span class="text-lg font-bold">{completedSets} / {sets}</span>
-                </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="space-y-2">
-                        <Label for="minutes">Minutes</Label>
-                        <Input id="minutes" type="number" min="0" step="1" bind:value={minutes} />
-                    </div>
-                    <div class="space-y-2">
-                        <Label for="seconds">Seconds</Label>
-                        <Input id="seconds" type="number" min="0" step="1" bind:value={seconds} />
-                    </div>
-                    <div class="space-y-2">
-                        <Label for="sets">Sets</Label>
-                        <Input id="sets" type="number" min="1" step="1" bind:value={sets} />
-                    </div>
-                </div>
-            </div>
-            
+				<div class="flex justify-between">
+					<span class="text-lg font-semibold">Time left:</span>
+					<span class="text-lg font-bold">{totalTime - time}</span>
+				</div>
+				<div class="flex justify-between">
+					<span class="text-lg font-semibold">Completed sets:</span>
+					<span class="text-lg font-bold">{completedSets} / {sets}</span>
+				</div>
+				<div class="grid grid-cols-3 gap-4">
+					<div class="space-y-2">
+						<Label for="minutes">Minutes</Label>
+						<Input id="minutes" type="number" min="0" step="1" bind:value={minutes} />
+					</div>
+					<div class="space-y-2">
+						<Label for="seconds">Seconds</Label>
+						<Input id="seconds" type="number" min="0" step="1" bind:value={seconds} />
+					</div>
+					<div class="space-y-2">
+						<Label for="sets">Sets</Label>
+						<Input id="sets" type="number" min="1" step="1" bind:value={sets} />
+					</div>
+				</div>
+			</div>
 		</CardContent>
 		<CardFooter class="flex justify-between">
 			<Button on:click={handleButtonClick} variant="default">
-                {#if !isRunning && !isPaused}
-                    Start
-                {:else if isRunning}
-                    Pause
-                {:else if isPaused}
-                    Resume
-                {/if}
-            </Button>
+				{#if !isRunning && !isPaused}
+					Start
+				{:else if isRunning}
+					Pause
+				{:else if isPaused}
+					Resume
+				{/if}
+			</Button>
 			<Button on:click={reset} variant="destructive">Reset</Button>
-            <Button variant="outline" href="/dashboard">Back to Dashboard</Button>
+			<Button variant="outline" href="/dashboard">Back to Dashboard</Button>
 		</CardFooter>
 	</Card>
 </div>

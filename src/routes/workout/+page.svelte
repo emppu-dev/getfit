@@ -19,14 +19,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 		CardTitle,
 		CardDescription
 	} from '$lib/components/ui/card';
-	import {
-		Command,
-		CommandInput,
-		CommandList,
-		CommandEmpty,
-		CommandGroup,
-		CommandItem
-	} from '$lib/components/ui/command';
+	import { Command, CommandInput } from '$lib/components/ui/command';
 
 	let exercises: StartWorkout.Exercise[] = [];
 	let newExercise: StartWorkout.Exercise = {
@@ -40,8 +33,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	let availableExercises: StartWorkout.Exercise[] = [];
 	let searchTerm = '';
 	let filteredExercises: StartWorkout.Exercise[] = [];
-	let showDropdown = false;
-
+	let filteredCache: { [key: string]: StartWorkout.Exercise[] } = {};
 	onMount(async () => {
 		if (!$currentUser) {
 			goto('/login');
@@ -51,10 +43,14 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	});
 
 	$: {
-		if (searchTerm.length > 0) {
+		if (filteredCache.hasOwnProperty(searchTerm)) {
+			console.log('use cache');
+			filteredExercises = filteredCache[searchTerm];
+		} else if (searchTerm.length > 0) {
 			filteredExercises = availableExercises.filter((exercise) =>
 				exercise.name.toLowerCase().includes(searchTerm.toLowerCase())
 			);
+			filteredCache[searchTerm] = filteredExercises;
 		} else {
 			filteredExercises = [];
 		}
@@ -62,18 +58,17 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 
 	function selectExercise(exercise: StartWorkout.Exercise) {
 		newExercise = { ...exercise, sets: 0, reps: 0, weight: 0 };
-		searchTerm = exercise.name;
-		showDropdown = false;
+		searchTerm = '';
 	}
 
 	function deleteExercise(index: number) {
 		exercises = exercises.filter((_, i) => i !== index);
 	}
 
-	function addExercise() {
-		if (newExercise.name) {
-			exercises = [...exercises, newExercise];
-			newExercise = { name: '', level: '', sets: 0, reps: 0, weight: 0 };
+	function addExercise(exercise: StartWorkout.Exercise) {
+		if (exercise.name) {
+			exercises = [...exercises, exercise];
+			exercise = { name: '', level: '', sets: 0, reps: 0, weight: 0 };
 			searchTerm = '';
 			error = '';
 		} else {
@@ -107,24 +102,27 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 				<CardDescription>Add exercises to your workout session</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<form on:submit|preventDefault={addExercise} class="space-y-4">
+				<form class="space-y-4">
 					<div class="space-y-2">
 						<Label for="exercise-search">Search Exercise</Label>
 						<Command>
 							<CommandInput placeholder="Search exercises" bind:value={searchTerm} />
 							{#if searchTerm.length > 0}
-								<CommandList>
-									<CommandEmpty>No exercises found.</CommandEmpty>
-									<CommandGroup>
-										{#each filteredExercises as exercise}
-											<CommandItem onSelect={() => selectExercise(exercise)}>
-												{exercise.name}
-											</CommandItem>
-										{/each}
-									</CommandGroup>
-								</CommandList>
+								<ul class="max-h-60 overflow-y-auto shadow-md">
+									{#each filteredExercises as exercise}
+										<li class="md:hover:bg-slate-100 dark:md:hover:bg-zinc-800">
+											<button
+												class="h-full w-full p-1 text-left"
+												on:click={() => selectExercise(exercise)}>{exercise.name}</button
+											>
+										</li>
+									{/each}
+								</ul>
 							{/if}
 						</Command>
+						{#if newExercise.name}
+							<p>Selected: {newExercise.name}</p>
+						{/if}
 					</div>
 					<div class="grid grid-cols-3 gap-4">
 						<div class="space-y-2">
@@ -147,7 +145,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 							/>
 						</div>
 					</div>
-					<Button type="submit">Add Exercise</Button>
+					<Button on:click={() => addExercise(newExercise)}>Add Exercise</Button>
 				</form>
 
 				<div class="mt-8">
