@@ -19,15 +19,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 		CardTitle,
 		CardDescription
 	} from '$lib/components/ui/card';
-	import {
-		Command,
-		CommandInput,
-		CommandList,
-		CommandEmpty,
-		CommandGroup,
-		CommandItem
-	} from '$lib/components/ui/command';
-	import type { Exercise } from '$lib/WorkoutSessionDetails';
+	import { Command, CommandInput } from '$lib/components/ui/command';
 
 	let exercises: StartWorkout.Exercise[] = [];
 	let newExercise: StartWorkout.Exercise = {
@@ -66,7 +58,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 
 	function selectExercise(exercise: StartWorkout.Exercise) {
 		newExercise = { ...exercise, sets: 0, reps: 0, weight: 0 };
-		searchTerm = "";
+		searchTerm = '';
 	}
 
 	function deleteExercise(index: number) {
@@ -119,7 +111,10 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 								<ul class="max-h-60 overflow-y-auto shadow-md">
 									{#each filteredExercises as exercise}
 										<li class="md:hover:bg-slate-100 dark:md:hover:bg-zinc-800">
-											<button class="w-full text-left h-full p-1" on:click={() => selectExercise(exercise)}>{exercise.name}</button>
+											<button
+												class="h-full w-full p-1 text-left"
+												on:click={() => selectExercise(exercise)}>{exercise.name}</button
+											>
 										</li>
 									{/each}
 								</ul>

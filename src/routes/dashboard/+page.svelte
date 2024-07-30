@@ -5,17 +5,23 @@ Licensed under the GNU AGPLv3
 https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 -->
 <script lang="ts">
-    import { currentUser, pb } from '../../lib/pocketbase';
-    import { calculateLevel } from '../../lib/utils';
-    import { onMount, tick } from 'svelte';
-    import { goto } from '$app/navigation';
-    import * as WorkoutTracker from '../../lib/WorkoutTracker';
-    import * as WorkoutSessionDetails from '../../lib/WorkoutSessionDetails';
-    import { Button } from "$lib/components/ui/button";
-    import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "$lib/components/ui/card";
-    import { Separator } from "$lib/components/ui/separator";
-    import { Avatar, AvatarFallback, AvatarImage } from "$lib/components/ui/avatar";
-    import { Progress } from "$lib/components/ui/progress";
+	import { currentUser, pb } from '../../lib/pocketbase';
+	import { calculateLevel } from '../../lib/utils';
+	import { onMount, tick } from 'svelte';
+	import { goto } from '$app/navigation';
+	import * as WorkoutTracker from '../../lib/WorkoutTracker';
+	import * as WorkoutSessionDetails from '../../lib/WorkoutSessionDetails';
+	import { Button } from '$lib/components/ui/button';
+	import {
+		Card,
+		CardContent,
+		CardHeader,
+		CardTitle,
+		CardDescription
+	} from '$lib/components/ui/card';
+	import { Separator } from '$lib/components/ui/separator';
+	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
+	import { Progress } from '$lib/components/ui/progress';
 
 	let userLevel = 1;
 	let workoutSessions: WorkoutTracker.WorkoutSession[] = [];
@@ -167,18 +173,17 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	}
 
 	async function selectSession(session: WorkoutTracker.WorkoutSession) {
-    selectedSession = session;
-    try {
-        sessionExercises = await WorkoutSessionDetails.loadWorkoutSession(session.id);
-        error = '';
+		selectedSession = session;
+		try {
+			sessionExercises = await WorkoutSessionDetails.loadWorkoutSession(session.id);
+			error = '';
 
-        await tick();
-        document.getElementById('workoutDetails')?.scrollIntoView({ behavior: 'smooth' });
-    } catch (e) {
-        error = e instanceof Error ? e.message : 'An unknown error occurred';
-    }
-}
-
+			await tick();
+			document.getElementById('workoutDetails')?.scrollIntoView({ behavior: 'smooth' });
+		} catch (e) {
+			error = e instanceof Error ? e.message : 'An unknown error occurred';
+		}
+	}
 
 	async function deleteWorkoutSession(id: string) {
 		try {
@@ -200,76 +205,88 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 </script>
 
 {#if $currentUser}
-    <div class="container mx-auto p-4">
-        <Card class="mb-6">
-            <CardHeader>
-                <div class="flex items-center space-x-4">
-                    <Avatar>
-                        <AvatarImage src={$currentUser.avatar} alt={$currentUser.name} />
-                        <AvatarFallback>{$currentUser.name[0]}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                        <CardTitle>{$currentUser.name}</CardTitle>
-                        <CardDescription>{$currentUser.email}</CardDescription>
-                    </div>
-                </div>
-            </CardHeader>
-            <CardContent>
-                <div class="space-y-4">
+	<div class="container mx-auto p-4">
+		<Card class="mb-6">
+			<CardHeader>
+				<div class="flex items-center space-x-4">
+					<Avatar>
+						<AvatarImage src={$currentUser.avatar} alt={$currentUser.name} />
+						<AvatarFallback>{$currentUser.name[0]}</AvatarFallback>
+					</Avatar>
 					<div>
-						<p class="text-sm text-muted-foreground mb-2">Level: {userLevel}</p>
-						<Progress value={xpProgress} />
-						<p class="text-sm text-muted-foreground mt-1">XP: {$currentUser.xp} / {levels[userLevel]}</p>
+						<CardTitle>{$currentUser.name}</CardTitle>
+						<CardDescription>{$currentUser.email}</CardDescription>
 					</div>
-					<div class="flex flex-col sm:flex-row sm:justify-end space-y-2 sm:space-y-0 sm:space-x-2">
-						<Button variant="default" href="/workout" class="w-full sm:w-auto">Start New Workout</Button>
-						<Button variant="secondary" href="/timer" class="w-full sm:w-auto">Workout Timer</Button>
+				</div>
+			</CardHeader>
+			<CardContent>
+				<div class="space-y-4">
+					<div>
+						<p class="mb-2 text-sm text-muted-foreground">Level: {userLevel}</p>
+						<Progress value={xpProgress} />
+						<p class="mt-1 text-sm text-muted-foreground">
+							XP: {$currentUser.xp} / {levels[userLevel]}
+						</p>
+					</div>
+					<div class="flex flex-col space-y-2 sm:flex-row sm:justify-end sm:space-x-2 sm:space-y-0">
+						<Button variant="default" href="/workout" class="w-full sm:w-auto"
+							>Start New Workout</Button
+						>
+						<Button variant="secondary" href="/timer" class="w-full sm:w-auto">Workout Timer</Button
+						>
 						<Button variant="outline" on:click={signOut} class="w-full sm:w-auto">Sign Out</Button>
-					</div>					
-				</div>				
-            </CardContent>
-        </Card>
+					</div>
+				</div>
+			</CardContent>
+		</Card>
 
-        <Card>
-            <CardHeader>
-                <CardTitle>Your Workout Sessions</CardTitle>
-            </CardHeader>
-            <CardContent>
-                {#each workoutSessions as session (session.id)}
-                    <div class="mb-4">
-                        <h3 class="text-lg font-semibold mb-2">Workout on {new Date(session.created).toLocaleString()}</h3>
-                        <div class="flex space-x-2">
-                            <Button variant="outline" on:click={() => selectSession(session)}>View Details</Button>
-                            <Button variant="destructive" on:click={() => deleteWorkoutSession(session.id)}>Delete</Button>
-                        </div>
-                    </div>
-                    <Separator class="my-4" />
-                {/each}
+		<Card>
+			<CardHeader>
+				<CardTitle>Your Workout Sessions</CardTitle>
+			</CardHeader>
+			<CardContent>
+				{#each workoutSessions as session (session.id)}
+					<div class="mb-4">
+						<h3 class="mb-2 text-lg font-semibold">
+							Workout on {new Date(session.created).toLocaleString()}
+						</h3>
+						<div class="flex space-x-2">
+							<Button variant="outline" on:click={() => selectSession(session)}>View Details</Button
+							>
+							<Button variant="destructive" on:click={() => deleteWorkoutSession(session.id)}
+								>Delete</Button
+							>
+						</div>
+					</div>
+					<Separator class="my-4" />
+				{/each}
 
-                {#if selectedSession}
-                    <div class="mt-6">
-                        <h3 id="workoutDetails" class="text-xl font-semibold mb-4">Workout Details</h3>
-                        {#if sessionExercises.length > 0}
-                            {#each sessionExercises as exercise (exercise.id)}
-                                <Card class="mb-4">
-                                    <CardContent class="pt-6">
-                                        <h4 class="text-lg font-semibold">{exercise.workout}</h4>
-                                        <p class="text-sm text-muted-foreground">Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}</p>
-                                    </CardContent>
-                                </Card>
-                            {/each}
-                        {:else}
-                            <p class="text-muted-foreground">No exercises found for this session.</p>
-                        {/if}
-                    </div>
-                {/if}
-            </CardContent>
-        </Card>
+				{#if selectedSession}
+					<div class="mt-6">
+						<h3 id="workoutDetails" class="mb-4 text-xl font-semibold">Workout Details</h3>
+						{#if sessionExercises.length > 0}
+							{#each sessionExercises as exercise (exercise.id)}
+								<Card class="mb-4">
+									<CardContent class="pt-6">
+										<h4 class="text-lg font-semibold">{exercise.workout}</h4>
+										<p class="text-sm text-muted-foreground">
+											Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}
+										</p>
+									</CardContent>
+								</Card>
+							{/each}
+						{:else}
+							<p class="text-muted-foreground">No exercises found for this session.</p>
+						{/if}
+					</div>
+				{/if}
+			</CardContent>
+		</Card>
 
-        {#if error}
-            <p class="text-red-500 mt-4">{error}</p>
-        {/if}
-    </div>
+		{#if error}
+			<p class="mt-4 text-red-500">{error}</p>
+		{/if}
+	</div>
 {:else}
-    <p>Redirecting to login...</p>
+	<p>Redirecting to login...</p>
 {/if}
