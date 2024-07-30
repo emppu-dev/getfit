@@ -219,6 +219,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
                     </div>
 					<div class="flex justify-end space-x-2">
 						<Button variant="default" href="/workout">Start New Workout</Button>
+						<Button variant="secondary" href="/timer">Workout Timer</Button>
 						<Button variant="outline" on:click={signOut}>Sign Out</Button>
 					</div>					
                 </div>
