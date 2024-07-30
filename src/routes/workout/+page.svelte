@@ -66,6 +66,10 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 		showDropdown = false;
 	}
 
+	function deleteExercise(index: number) {
+		exercises = exercises.filter((_, i) => i !== index);
+	}
+
 	function addExercise() {
 		if (newExercise.name) {
 			exercises = [...exercises, newExercise];
@@ -150,9 +154,12 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 					<h3 class="mb-4 text-lg font-semibold">Current Workout</h3>
 					{#each exercises as exercise, index (index)}
 						<Card class="mb-4">
-							<CardContent class="pt-4">
-								<h4 class="font-bold">{exercise.name} (Level: {exercise.level})</h4>
-								<p>Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}</p>
+							<CardContent class="flex items-center justify-between pt-4">
+								<div>
+									<h4 class="font-bold">{exercise.name} (Level: {exercise.level})</h4>
+									<p>Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}</p>
+								</div>
+								<Button variant="destructive" on:click={() => deleteExercise(index)}>Delete</Button>
 							</CardContent>
 						</Card>
 					{/each}
