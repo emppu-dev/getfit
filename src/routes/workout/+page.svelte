@@ -20,6 +20,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 		CardDescription
 	} from '$lib/components/ui/card';
 	import { Command, CommandInput } from '$lib/components/ui/command';
+	import { Plus, ArrowLeft } from 'lucide-svelte';
 
 	let exercises: StartWorkout.Exercise[] = [];
 	let newExercise: StartWorkout.Exercise = {
@@ -145,9 +146,11 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 							/>
 						</div>
 					</div>
-					<Button on:click={() => addExercise(newExercise)}>Add Exercise</Button>
+					<Button on:click={() => addExercise(newExercise)}>
+						<Plus class="mr-2 h-4 w-4" />
+						Add Exercise
+					</Button>
 				</form>
-
 				<div class="mt-8">
 					<h3 class="mb-4 text-lg font-semibold">Current Workout</h3>
 					{#each exercises as exercise, index (index)}
@@ -171,7 +174,10 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 					<p class="mt-2 text-red-500">{error}</p>
 				{/if}
 				<div class="flex justify-end space-x-2">
-					<Button variant="outline" href="/dashboard">Back to Dashboard</Button>
+					<Button variant="outline" href="/dashboard">
+						<ArrowLeft class="mr-2 h-4 w-4" />
+						Back to Dashboard
+					</Button>
 				</div>
 			</CardContent>
 		</Card>

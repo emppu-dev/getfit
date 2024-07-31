@@ -22,6 +22,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	import { Separator } from '$lib/components/ui/separator';
 	import { Avatar, AvatarFallback, AvatarImage } from '$lib/components/ui/avatar';
 	import { Progress } from '$lib/components/ui/progress';
+	import { Play, Timer, LogOut, Eye, Trash2 } from 'lucide-svelte';
 
 	let userLevel = 1;
 	let workoutSessions: WorkoutTracker.WorkoutSession[] = [];
@@ -229,12 +230,18 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 						</p>
 					</div>
 					<div class="flex flex-col space-y-2 sm:flex-row sm:justify-end sm:space-x-2 sm:space-y-0">
-						<Button variant="default" href="/workout" class="w-full sm:w-auto"
-							>Start New Workout</Button
-						>
-						<Button variant="secondary" href="/timer" class="w-full sm:w-auto">Workout Timer</Button
-						>
-						<Button variant="outline" on:click={signOut} class="w-full sm:w-auto">Sign Out</Button>
+						<Button variant="default" href="/workout" class="w-full sm:w-auto">
+							<Play class="mr-2 h-4 w-4" />
+							Start New Workout
+						</Button>
+						<Button variant="secondary" href="/timer" class="w-full sm:w-auto">
+							<Timer class="mr-2 h-4 w-4" />
+							Workout Timer
+						</Button>
+						<Button variant="outline" on:click={signOut} class="w-full sm:w-auto">
+							<LogOut class="mr-2 h-4 w-4" />
+							Sign Out
+						</Button>
 					</div>
 				</div>
 			</CardContent>
@@ -251,11 +258,14 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 							Workout on {new Date(session.created).toLocaleString()}
 						</h3>
 						<div class="flex space-x-2">
-							<Button variant="outline" on:click={() => selectSession(session)}>View Details</Button
-							>
-							<Button variant="destructive" on:click={() => deleteWorkoutSession(session.id)}
-								>Delete</Button
-							>
+							<Button variant="outline" on:click={() => selectSession(session)}>
+								<Eye class="mr-2 h-4 w-4" />
+								View Details
+							</Button>
+							<Button variant="destructive" on:click={() => deleteWorkoutSession(session.id)}>
+								<Trash2 class="mr-2 h-4 w-4" />
+								Delete
+							</Button>
 						</div>
 					</div>
 					<Separator class="my-4" />
