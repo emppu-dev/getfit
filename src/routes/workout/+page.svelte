@@ -20,7 +20,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 		CardDescription
 	} from '$lib/components/ui/card';
 	import { Command, CommandInput } from '$lib/components/ui/command';
-	import { Plus, ArrowLeft } from 'lucide-svelte';
+	import { Plus, ArrowLeft, Save, Trash2 } from 'lucide-svelte';
 
 	let exercises: StartWorkout.Exercise[] = [];
 	let newExercise: StartWorkout.Exercise = {
@@ -160,14 +160,20 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 									<h4 class="font-bold">{exercise.name} (Level: {exercise.level})</h4>
 									<p>Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}</p>
 								</div>
-								<Button variant="destructive" on:click={() => deleteExercise(index)}>Delete</Button>
+								<Button variant="destructive" on:click={() => deleteExercise(index)}>
+									<Trash2 class="mr-2 h-4 w-4" />
+									Delete
+								</Button>
 							</CardContent>
 						</Card>
 					{/each}
 				</div>
 
 				{#if exercises.length > 0}
-					<Button on:click={saveWorkoutSession} variant="secondary">Save Workout Session</Button>
+					<Button on:click={saveWorkoutSession} variant="secondary">
+						<Save class="mr-2 h-4 w-4" />
+						Save Workout Session
+					</Button>
 				{/if}
 
 				{#if error}
