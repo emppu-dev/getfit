@@ -12,6 +12,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	import { Input } from '$lib/components/ui/input/index';
 	import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '$lib/components/ui/card';
 	import { Label } from '$lib/components/ui/label';
+	import { Play, Pause, RotateCcw, ArrowLeft } from 'lucide-svelte';
 
 	onMount(async () => {
 		if (!currentUser) {
@@ -95,7 +96,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	}
 </script>
 
-<div class="flex min-h-screen items-center justify-center">
+<div class="container flex min-h-screen items-center justify-center p-4">
 	<Card class="w-full max-w-md">
 		<CardHeader>
 			<CardTitle class="text-center text-2xl font-bold">Workout Set Timer</CardTitle>
@@ -129,15 +130,24 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 		<CardFooter class="flex justify-between">
 			<Button on:click={handleButtonClick} variant="default">
 				{#if !isRunning && !isPaused}
+					<Play class="mr-2 h-4 w-4" />
 					Start
 				{:else if isRunning}
+					<Pause class="mr-2 h-4 w-4" />
 					Pause
 				{:else if isPaused}
+					<Play class="mr-2 h-4 w-4" />
 					Resume
 				{/if}
 			</Button>
-			<Button on:click={reset} variant="destructive">Reset</Button>
-			<Button variant="outline" href="/dashboard">Back to Dashboard</Button>
+			<Button on:click={reset} variant="destructive">
+				<RotateCcw class="mr-2 h-4 w-4" />
+				Reset
+			</Button>
+			<Button variant="outline" href="/dashboard">
+				<ArrowLeft class="mr-2 h-4 w-4" />
+				Back to Dashboard
+			</Button>
 		</CardFooter>
 	</Card>
 </div>
