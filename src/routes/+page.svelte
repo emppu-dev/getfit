@@ -16,7 +16,7 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 	import { Github } from 'lucide-svelte';
 </script>
 
-<div class="flex h-screen flex-col items-center justify-center">
+<div class="flex h-screen flex-col items-center justify-center p-4">
 	<Card class="mx-auto max-w-md shadow-lg">
 		<CardHeader>
 			<CardTitle class="text-center text-4xl font-bold">Welcome to GetFit</CardTitle>
