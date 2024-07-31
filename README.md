@@ -2,8 +2,9 @@
 A gamified exercise tracker
 
 ## 📸 Preview
-![image](https://github.com/user-attachments/assets/493ab7f2-f6e0-444c-a465-6b60e41d49d6)
-![image](https://github.com/user-attachments/assets/dc16bd57-3ab7-4711-b71c-476652bfdbc4)
+![image](https://github.com/user-attachments/assets/7554bc00-63a8-4676-bfd6-78781851b238)
+![image](https://github.com/user-attachments/assets/9abbb02b-7c5d-4877-a337-77b16a53995e)
+![image](https://github.com/user-attachments/assets/ac28a5c7-8955-4c7f-8d95-06a6b757ca14)
 
 ## 📝 Todo
 - [x] PocketBase setup
