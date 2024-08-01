@@ -127,8 +127,8 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 				</div>
 			</div>
 		</CardContent>
-		<CardFooter class="flex justify-between">
-			<Button on:click={handleButtonClick} variant="default">
+		<CardFooter class="flex justify-between flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+			<Button on:click={handleButtonClick} variant="default" class="w-full sm:w-auto">
 				{#if !isRunning && !isPaused}
 					<Play class="mr-2 h-4 w-4" />
 					Start
@@ -140,11 +140,11 @@ https://raw.githubusercontent.com/emppu-dev/getfit/main/LICENSE
 					Resume
 				{/if}
 			</Button>
-			<Button on:click={reset} variant="destructive">
+			<Button on:click={reset} variant="destructive" class="w-full sm:w-auto">
 				<RotateCcw class="mr-2 h-4 w-4" />
 				Reset
 			</Button>
-			<Button variant="outline" href="/dashboard">
+			<Button variant="outline" href="/dashboard" class="w-full sm:w-auto">
 				<ArrowLeft class="mr-2 h-4 w-4" />
 				Back to Dashboard
 			</Button>
